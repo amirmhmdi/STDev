@@ -1,66 +1,70 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
 
-void main() {
-  runApp(const MyApp());
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:stdev_task/blocs/cubit/cantact_bloc_cubit.dart';
+import 'package:stdev_task/screens/add_contact.dart';
+import 'package:stdev_task/screens/detail_contact.dart';
+import 'package:stdev_task/screens/edit_contact.dart';
+import 'package:stdev_task/screens/list_contact.dart';
+
+void main() async {
+  runApp(
+    MyApp(),
+  );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
+  State<MyApp> createState() => _MyAppState();
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
+bool isDark = false;
+final ThemeData lighttheme = ThemeData(
+  primaryColor: Colors.green,
+  brightness: Brightness.light,
+  appBarTheme: const AppBarTheme(
+    backgroundColor: Colors.white,
+    titleTextStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 22),
+    iconTheme: IconThemeData(color: Colors.black),
+  ),
+);
+final ThemeData darktheme = ThemeData(
+  primaryColor: Colors.black,
+  brightness: Brightness.dark,
+  appBarTheme: const AppBarTheme(
+    backgroundColor: Colors.black,
+    titleTextStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 22),
+    iconTheme: IconThemeData(color: Colors.white),
+  ),
+);
 
+class _MyAppState extends State<MyApp> {
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
+  void initState() {
+    super.initState();
+    Timer.periodic(const Duration(milliseconds: 100), (val) {
+      setState(() {});
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+    return BlocProvider(
+      create: (context) => CantactBlocCubit(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: lighttheme,
+        darkTheme: darktheme,
+        themeMode: (isDark == true) ? ThemeMode.dark : ThemeMode.light,
+        routes: {
+          "/": (context) => const ListContact(),
+          "addcontactpage": (context) => const AddContactPage(),
+          "detailpage": (context) => const DetailPage(),
+          "editpage": (context) => const EditPage(),
+        },
       ),
     );
   }
