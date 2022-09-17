@@ -73,7 +73,7 @@ class _AddContactPageState extends State<AddContactPage> {
                       // image: _image,
                     );
                     contactCubit.contactList.add(cont);
-                    Navigator.of(context).pushNamed("/");
+                    Navigator.of(context).pop();
                   }
                 });
               },
