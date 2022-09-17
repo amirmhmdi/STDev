@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:stdev_task/blocs/cubit/cantact_bloc_cubit.dart';
 import 'package:stdev_task/screens/add_contact.dart';
 import 'package:stdev_task/screens/detail_contact.dart';
@@ -54,17 +55,24 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => CantactBlocCubit(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: lighttheme,
-        darkTheme: darktheme,
-        themeMode: (isDark == true) ? ThemeMode.dark : ThemeMode.light,
-        routes: {
-          "/": (context) => const ListContact(),
-          "addcontactpage": (context) => const AddContactPage(),
-          "detailpage": (context) => const DetailPage(),
-          "editpage": (context) => const EditPage(),
-        },
+      child: OKToast(
+        textStyle: const TextStyle(fontSize: 19.0, color: Colors.white),
+        backgroundColor: Colors.grey,
+        animationCurve: Curves.easeIn,
+        animationDuration: const Duration(milliseconds: 200),
+        duration: const Duration(seconds: 3),
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: lighttheme,
+          darkTheme: darktheme,
+          themeMode: (isDark == true) ? ThemeMode.dark : ThemeMode.light,
+          routes: {
+            "/": (context) => const ListContact(),
+            "addcontactpage": (context) => const AddContactPage(),
+            "detailpage": (context) => const DetailPage(),
+            "editpage": (context) => const EditPage(),
+          },
+        ),
       ),
     );
   }
