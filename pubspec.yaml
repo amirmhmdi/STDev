@@ -16,6 +16,7 @@ dependencies:
   url_launcher: ^6.0.20
   flutter_bloc: ^8.1.1
   http: ^0.13.5
+  oktoast: ^3.3.0
 
 dev_dependencies:
   flutter_test:
