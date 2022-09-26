@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:stdev_task/blocs/cubit/cantact_bloc_cubit.dart';
-import 'package:stdev_task/entities/contact_model.dart';
+import 'package:stdev_task/entities/contact_response_model.dart';
 import 'package:stdev_task/main.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -72,7 +72,7 @@ class _ListContactState extends State<ListContact> {
             if (state is CantactBlocLoaded) {
               return Container(
                   alignment: Alignment.center,
-                  child: (contactCubit.contactList.isEmpty)
+                  child: (contactCubit.contactResponse == null && contactCubit.contactResponse!.data!.isEmpty)
                       ? Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -89,22 +89,22 @@ class _ListContactState extends State<ListContact> {
                           ],
                         )
                       : ListView.builder(
-                          itemCount: contactCubit.contactList.length,
+                          itemCount: contactCubit.contactResponse!.data!.length,
                           itemBuilder: (context, i) {
                             return ListTile(
                               onTap: () {
-                                Navigator.of(context).pushNamed("detailpage", arguments: contactCubit.contactList[i]);
+                                Navigator.of(context).pushNamed("detailpage", arguments: contactCubit.contactResponse!.data![i]);
                               },
                               leading: CircleAvatar(
                                 radius: 26,
                                 // backgroundImage: (contactCubit.contactList[i].image != null) ? FileImage(contactCubit.contactList[i].image!) : null,
                               ),
-                              title: Text("${contactCubit.contactList[i].firstName} ${contactCubit.contactList[i].lastName}"),
-                              subtitle: Text(contactCubit.contactList[i].phone ?? ""),
+                              title: Text("${contactCubit.contactResponse!.data![i].firstName} ${contactCubit.contactResponse!.data![i].lastName}"),
+                              subtitle: Text(contactCubit.contactResponse!.data![i].phone ?? ""),
                               trailing: IconButton(
                                 icon: const Icon(Icons.call, color: Colors.green, size: 33),
                                 onPressed: () async {
-                                  String url = "tel:${contactCubit.contactList[i].phone}";
+                                  String url = "tel:${contactCubit.contactResponse!.data![i].phone}";
 
                                   await canLaunch(url);
 

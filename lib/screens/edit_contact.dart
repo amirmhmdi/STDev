@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:stdev_task/blocs/cubit/cantact_bloc_cubit.dart';
-import 'package:stdev_task/entities/contact_model.dart';
+import 'package:stdev_task/entities/contact_data_model.dart';
+import 'package:stdev_task/entities/contact_response_model.dart';
 
 class EditPage extends StatefulWidget {
   const EditPage({Key? key}) : super(key: key);
@@ -69,7 +70,7 @@ class _EditPageState extends State<EditPage> {
                 setState(() {
                   if (editcontactkey.currentState!.validate()) {
                     editcontactkey.currentState!.save();
-                    Contact cont = Contact(
+                    ContactData cont = ContactData(
                       firstName: firstname,
                       lastName: lastname,
                       phone: phone,
@@ -77,8 +78,8 @@ class _EditPageState extends State<EditPage> {
                       // image: _image,
                     );
 
-                    int i = contactCubit.contactList.indexOf(args);
-                    contactCubit.contactList[i] = cont;
+                    int i = contactCubit.contactResponse!.data!.indexOf(args);
+                    contactCubit.contactResponse!.data![i] = cont;
                     setState(() {
                       Navigator.of(context).pushReplacementNamed("/");
                     });

@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:stdev_task/entities/contact_model.dart';
+import 'package:stdev_task/entities/contact_data_model.dart';
+import 'package:stdev_task/entities/contact_response_model.dart';
 import 'package:stdev_task/repositories/contact_repository.dart';
 
 part 'cantact_bloc_state.dart';
@@ -11,7 +12,7 @@ class CantactBlocCubit extends Cubit<CantactBlocState> {
   CantactBlocCubit() : super(CantactBlocInitial());
   ContactRepository contactRepository = ContactRepository();
 
-  List<Contact> contactList = <Contact>[];
+  Contact? contactResponse;
 
   void fetchContact() async {
     emit(CantactBlocLoading());
@@ -20,11 +21,23 @@ class CantactBlocCubit extends Cubit<CantactBlocState> {
     var response = await contactRepository.loadContact();
 
     if (response.statusCode == 200) {
-      List listJson = jsonDecode(mock);
-      listJson.forEach((element) {
-        Contact contact = Contact.fromJson(element);
-        contactList.add(contact);
-      });
+      contactResponse = Contact.fromJson(jsonDecode(response.body));
+      emit(CantactBlocLoaded());
+    } else {
+      emit(CantactBlocLoadedError());
+    }
+  }
+
+  void addContact(ContactData contact) async {
+    ContactData? responseContactData;
+    emit(CantactBlocAdding());
+    var response = await contactRepository.addContact(contact);
+
+    if (response.statusCode == 200) {
+      responseContactData = ContactData.fromJson(jsonDecode(response.body));
+      contactResponse?.data?.add(responseContactData);
+      contactResponse?.count = contactResponse?.data?.length.toString();
+      emit(CantactBlocAdded());
       emit(CantactBlocLoaded());
     } else {
       emit(CantactBlocLoadedError());
@@ -35,7 +48,7 @@ class CantactBlocCubit extends Cubit<CantactBlocState> {
     var response = await contactRepository.editContact(editedContact);
 
     if (response.statusCode == 200) {
-      emit(CantactBlocedited());
+      emit(CantactBlocEdited());
     } else if (response.statusCode == 400) {
       emit(CantactBlocServerError("Validation error"));
     } else if (response.statusCode == 404) {

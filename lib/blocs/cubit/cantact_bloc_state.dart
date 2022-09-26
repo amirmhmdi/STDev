@@ -11,7 +11,11 @@ class CantactBlocLoading extends CantactBlocState {}
 
 class CantactBlocLoadedError extends CantactBlocState {}
 
-class CantactBlocedited extends CantactBlocState {}
+class CantactBlocAdded extends CantactBlocState {}
+
+class CantactBlocAdding extends CantactBlocState {}
+
+class CantactBlocEdited extends CantactBlocState {}
 
 class CantactBloceRemoved extends CantactBlocState {}
 

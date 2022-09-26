@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stdev_task/blocs/cubit/cantact_bloc_cubit.dart';
-import 'package:stdev_task/entities/contact_model.dart';
+import 'package:stdev_task/entities/contact_response_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailPage extends StatefulWidget {
@@ -74,7 +74,7 @@ class _DetailPageState extends State<DetailPage> {
                 IconButton(
                   onPressed: () {
                     setState(() {
-                      contactCubit.contactList.remove(args);
+                      contactCubit.contactResponse!.data!.remove(args);
                       Navigator.of(context).pushReplacementNamed("/");
                     });
                   },
