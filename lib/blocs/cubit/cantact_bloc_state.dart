@@ -17,6 +17,8 @@ class CantactBlocAdding extends CantactBlocState {}
 
 class CantactBlocEdited extends CantactBlocState {}
 
+class CantactBlocEditing extends CantactBlocState {}
+
 class CantactBloceRemoved extends CantactBlocState {}
 
 class CantactBlocServerError extends CantactBlocState {

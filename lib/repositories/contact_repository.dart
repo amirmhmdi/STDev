@@ -31,8 +31,14 @@ class ContactRepository {
     return response!;
   }
 
-  Future<http.Response> editContact(Contact editedContact) async {
-    http.Response response = await http.patch(Uri.parse(ApiUrl.contactUrl), body: jsonEncode(editedContact.toJson()), headers: _header);
+  Future<http.Response> editContact(ContactData editedContact) async {
+    String url = "${ApiUrl.contactUrl}/${editedContact.id!}";
+    String a = jsonEncode(editedContact.toJson());
+    http.Response response = await http.put(
+      Uri.parse(url),
+      body: a,
+      headers: _header,
+    );
 
     return response;
   }

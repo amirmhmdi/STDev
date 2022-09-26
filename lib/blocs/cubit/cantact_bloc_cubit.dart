@@ -40,15 +40,25 @@ class CantactBlocCubit extends Cubit<CantactBlocState> {
       emit(CantactBlocAdded());
       emit(CantactBlocLoaded());
     } else {
-      emit(CantactBlocLoadedError());
+      emit(CantactBlocServerError("Server Error"));
     }
   }
 
-  void editContact(Contact editedContact) async {
+  void editContact(ContactData editedContact) async {
+    emit(CantactBlocEditing());
     var response = await contactRepository.editContact(editedContact);
 
     if (response.statusCode == 200) {
+      ContactData responseContactData = ContactData.fromJson(jsonDecode(response.body));
+      contactResponse?.data?.removeWhere((element) => element.id == editedContact.id);
+      // TODO : it must return image url too, but it dosent return url of contact image
+      // contactResponse?.data?.add(responseContactData);
+
+      //quick fix use this^
+      contactResponse?.data?.add(editedContact);
+
       emit(CantactBlocEdited());
+      emit(CantactBlocLoaded());
     } else if (response.statusCode == 400) {
       emit(CantactBlocServerError("Validation error"));
     } else if (response.statusCode == 404) {
