@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oktoast/oktoast.dart';
@@ -35,22 +36,17 @@ class _ListContactState extends State<ListContact> {
           title: const Text("Contact"),
           leading: null,
           actions: [
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  if (isDark == true) {
-                    isDark = false;
-                  } else {
-                    isDark = true;
-                  }
-                });
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CircleAvatar(
-                  radius: 10,
-                  backgroundColor: Theme.of(context).appBarTheme.titleTextStyle!.color,
-                ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CupertinoSwitch(
+                value: isDark,
+                activeColor: Colors.blueGrey,
+                trackColor: Colors.grey,
+                onChanged: (value) {
+                  setState(() {
+                    isDark = value;
+                  });
+                },
               ),
             ),
           ],
