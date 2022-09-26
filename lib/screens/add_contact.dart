@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:stdev_task/blocs/cubit/cantact_bloc_cubit.dart';
 import 'package:stdev_task/entities/contact_data_model.dart';
 import 'package:stdev_task/entities/contact_response_model.dart';
@@ -45,6 +46,15 @@ class _AddContactPageState extends State<AddContactPage> {
       listener: (context, state) {
         if (state is CantactBlocAdded) {
           Navigator.of(context).pop();
+        } else if (state is CantactBlocServerError) {
+          showToast(
+            state.errorMessage,
+            duration: const Duration(milliseconds: 3500),
+            position: ToastPosition.top,
+            backgroundColor: Colors.black.withOpacity(0.8),
+            radius: 3.0,
+            textStyle: const TextStyle(fontSize: 30.0),
+          );
         }
       },
       buildWhen: (previous, current) {
