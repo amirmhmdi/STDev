@@ -4,6 +4,7 @@ import 'package:oktoast/oktoast.dart';
 import 'package:stdev_task/blocs/cubit/cantact_bloc_cubit.dart';
 import 'package:stdev_task/entities/contact_response_model.dart';
 import 'package:stdev_task/main.dart';
+import 'package:stdev_task/utils/choose_color.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ListContact extends StatefulWidget {
@@ -97,7 +98,15 @@ class _ListContactState extends State<ListContact> {
                               },
                               leading: CircleAvatar(
                                 radius: 26,
-                                // backgroundImage: (contactCubit.contactList[i].image != null) ? FileImage(contactCubit.contactList[i].image!) : null,
+                                backgroundColor: chooseColor(contactCubit.contactResponse!.data![i].lastName ?? "  "),
+                                child: Text(
+                                  contactCubit.contactResponse!.data![i].firstName!.substring(0, 1).toUpperCase(),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                foregroundImage: NetworkImage(contactCubit.contactResponse?.data?[i].picture?.first ?? ""),
                               ),
                               title: Text("${contactCubit.contactResponse!.data![i].firstName} ${contactCubit.contactResponse!.data![i].lastName}"),
                               subtitle: Text(contactCubit.contactResponse!.data![i].phone ?? ""),
