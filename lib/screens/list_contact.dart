@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:stdev_task/blocs/cubit/cantact_bloc_cubit.dart';
-import 'package:stdev_task/entities/contact_response_model.dart';
 import 'package:stdev_task/main.dart';
 import 'package:stdev_task/utils/choose_color.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -99,14 +98,14 @@ class _ListContactState extends State<ListContact> {
                               leading: CircleAvatar(
                                 radius: 26,
                                 backgroundColor: chooseColor(contactCubit.contactResponse!.data![i].lastName ?? "  "),
+                                foregroundImage: NetworkImage(contactCubit.contactResponse?.data?[i].picture?.first ?? ""),
                                 child: Text(
                                   contactCubit.contactResponse!.data![i].firstName!.substring(0, 1).toUpperCase(),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                foregroundImage: NetworkImage(contactCubit.contactResponse?.data?[i].picture?.first ?? ""),
                               ),
                               title: Text("${contactCubit.contactResponse!.data![i].firstName} ${contactCubit.contactResponse!.data![i].lastName}"),
                               subtitle: Text(contactCubit.contactResponse!.data![i].phone ?? ""),
@@ -127,14 +126,14 @@ class _ListContactState extends State<ListContact> {
             if (state is CantactBlocLoadedError) {
               return Center(
                 child: ElevatedButton(
-                  child: Text("Try again"),
+                  child: const Text("Try again"),
                   onPressed: () {
                     contactCubit.fetchContact();
                   },
                 ),
               );
             } else {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             }

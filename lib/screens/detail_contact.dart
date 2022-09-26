@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:stdev_task/blocs/cubit/cantact_bloc_cubit.dart';
-import 'package:stdev_task/entities/contact_response_model.dart';
+import 'package:stdev_task/screens/widget/loading_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DetailPage extends StatefulWidget {
@@ -49,11 +49,7 @@ class _DetailPageState extends State<DetailPage> {
       },
       builder: (context, state) {
         if (state is CantactBloceRemoving) {
-          return const Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
+          return const LoadingWidget();
         } else {
           return Scaffold(
             appBar: AppBar(
@@ -148,9 +144,9 @@ class _DetailPageState extends State<DetailPage> {
 
                           await launch("tel:" + args.phone);
                         },
-                        child: const Icon(Icons.call),
                         backgroundColor: Colors.green,
                         mini: true,
+                        child: const Icon(Icons.call),
                       ),
                       FloatingActionButton(
                         onPressed: () async {
@@ -158,9 +154,9 @@ class _DetailPageState extends State<DetailPage> {
 
                           await launch("sms: " + args.phone);
                         },
-                        child: const Icon(Icons.message),
                         backgroundColor: Colors.amber,
                         mini: true,
+                        child: const Icon(Icons.message),
                       ),
                       FloatingActionButton(
                         onPressed: () async {
@@ -168,15 +164,15 @@ class _DetailPageState extends State<DetailPage> {
 
                           await launch("mailto: " + args.phone);
                         },
-                        child: const Icon(Icons.email),
                         backgroundColor: Colors.blue,
                         mini: true,
+                        child: const Icon(Icons.email),
                       ),
                       FloatingActionButton(
                         onPressed: () {},
-                        child: const Icon(Icons.share),
                         backgroundColor: Colors.orange,
                         mini: true,
+                        child: const Icon(Icons.share),
                       ),
                     ],
                   ),

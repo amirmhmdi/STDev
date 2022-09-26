@@ -6,7 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:stdev_task/blocs/cubit/cantact_bloc_cubit.dart';
 import 'package:stdev_task/entities/contact_data_model.dart';
-import 'package:stdev_task/entities/contact_response_model.dart';
+import 'package:stdev_task/screens/widget/loading_widget.dart';
 
 class AddContactPage extends StatefulWidget {
   const AddContactPage({Key? key}) : super(key: key);
@@ -66,11 +66,7 @@ class _AddContactPageState extends State<AddContactPage> {
       },
       builder: (context, state) {
         if (state is CantactBlocAdding) {
-          return const Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
+          return const LoadingWidget();
         } else {
           return Scaffold(
             appBar: AppBar(
@@ -164,105 +160,106 @@ class _AddContactPageState extends State<AddContactPage> {
                     ),
                   ),
                   Expanded(
-                      flex: 8,
-                      child: SingleChildScrollView(
-                        child: Container(
-                          padding: const EdgeInsets.all(28),
-                          child: Form(
-                            key: addcontactkey,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                TextFormField(
-                                  controller: _firstname,
-                                  validator: (val) {
-                                    if (val!.isEmpty) {
-                                      return "Enter firstname here";
-                                    }
-                                    return null;
-                                  },
-                                  onSaved: (val) {
-                                    firstname = val;
-                                  },
-                                  decoration: const InputDecoration(
-                                    hintText: "First Name",
-                                    border: OutlineInputBorder(),
-                                  ),
+                    flex: 8,
+                    child: SingleChildScrollView(
+                      child: Container(
+                        padding: const EdgeInsets.all(28),
+                        child: Form(
+                          key: addcontactkey,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              TextFormField(
+                                controller: _firstname,
+                                validator: (val) {
+                                  if (val!.isEmpty) {
+                                    return "Enter firstname here";
+                                  }
+                                  return null;
+                                },
+                                onSaved: (val) {
+                                  firstname = val;
+                                },
+                                decoration: const InputDecoration(
+                                  hintText: "First Name",
+                                  border: OutlineInputBorder(),
                                 ),
-                                const SizedBox(height: 20),
-                                TextFormField(
-                                  controller: _lastname,
-                                  validator: (val) {
-                                    if (val!.isEmpty) {
-                                      return "Enter lastname here";
-                                    }
-                                    return null;
-                                  },
-                                  onSaved: (val) {
-                                    lastname = val;
-                                  },
-                                  decoration: const InputDecoration(
-                                    hintText: "Last Name",
-                                    border: OutlineInputBorder(),
-                                  ),
+                              ),
+                              const SizedBox(height: 20),
+                              TextFormField(
+                                controller: _lastname,
+                                validator: (val) {
+                                  if (val!.isEmpty) {
+                                    return "Enter lastname here";
+                                  }
+                                  return null;
+                                },
+                                onSaved: (val) {
+                                  lastname = val;
+                                },
+                                decoration: const InputDecoration(
+                                  hintText: "Last Name",
+                                  border: OutlineInputBorder(),
                                 ),
-                                const SizedBox(height: 20),
-                                TextFormField(
-                                  controller: _phone,
-                                  validator: (val) {
-                                    if (val!.isEmpty) {
-                                      return "Enter phone number here";
-                                    }
-                                    return null;
-                                  },
-                                  onSaved: (val) {
-                                    phone = val;
-                                  },
-                                  keyboardType: TextInputType.number,
-                                  decoration: const InputDecoration(
-                                    hintText: "Phone Number",
-                                    border: OutlineInputBorder(),
-                                  ),
+                              ),
+                              const SizedBox(height: 20),
+                              TextFormField(
+                                controller: _phone,
+                                validator: (val) {
+                                  if (val!.isEmpty) {
+                                    return "Enter phone number here";
+                                  }
+                                  return null;
+                                },
+                                onSaved: (val) {
+                                  phone = val;
+                                },
+                                keyboardType: TextInputType.number,
+                                decoration: const InputDecoration(
+                                  hintText: "Phone Number",
+                                  border: OutlineInputBorder(),
                                 ),
-                                const SizedBox(height: 20),
-                                TextFormField(
-                                  controller: _email,
-                                  validator: (val) {
-                                    if (val!.isEmpty) {
-                                      return "Enter email here";
-                                    }
-                                    return null;
-                                  },
-                                  onSaved: (val) {
-                                    email = val;
-                                  },
-                                  decoration: const InputDecoration(
-                                    hintText: "Email",
-                                    border: OutlineInputBorder(),
-                                  ),
+                              ),
+                              const SizedBox(height: 20),
+                              TextFormField(
+                                controller: _email,
+                                validator: (val) {
+                                  if (val!.isEmpty) {
+                                    return "Enter email here";
+                                  }
+                                  return null;
+                                },
+                                onSaved: (val) {
+                                  email = val;
+                                },
+                                decoration: const InputDecoration(
+                                  hintText: "Email",
+                                  border: OutlineInputBorder(),
                                 ),
-                                const SizedBox(height: 20),
-                                TextFormField(
-                                  controller: _notes,
-                                  validator: (val) {
-                                    if (val!.isEmpty) {
-                                      return "Enter note here";
-                                    }
-                                    return null;
-                                  },
-                                  onSaved: (val) {
-                                    notes = val;
-                                  },
-                                  decoration: const InputDecoration(
-                                    hintText: "note",
-                                    border: OutlineInputBorder(),
-                                  ),
+                              ),
+                              const SizedBox(height: 20),
+                              TextFormField(
+                                controller: _notes,
+                                validator: (val) {
+                                  if (val!.isEmpty) {
+                                    return "Enter note here";
+                                  }
+                                  return null;
+                                },
+                                onSaved: (val) {
+                                  notes = val;
+                                },
+                                decoration: const InputDecoration(
+                                  hintText: "note",
+                                  border: OutlineInputBorder(),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
-                      ))
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),
