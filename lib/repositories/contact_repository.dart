@@ -33,18 +33,18 @@ class ContactRepository {
 
   Future<http.Response> editContact(ContactData editedContact) async {
     String url = "${ApiUrl.contactUrl}/${editedContact.id!}";
-    String a = jsonEncode(editedContact.toJson());
     http.Response response = await http.put(
       Uri.parse(url),
-      body: a,
+      body: jsonEncode(editedContact.toJson()),
       headers: _header,
     );
 
     return response;
   }
 
-  Future<http.Response> deleteContact(String editedContactId) async {
-    http.Response response = await http.delete(Uri.parse(ApiUrl.contactUrl), body: editedContactId, headers: _header);
+  Future<http.Response> deleteContact(String removedContactId) async {
+    String url = "${ApiUrl.contactUrl}/$removedContactId";
+    http.Response response = await http.delete(Uri.parse(url), headers: _header);
 
     return response;
   }

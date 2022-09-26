@@ -21,6 +21,8 @@ class CantactBlocEditing extends CantactBlocState {}
 
 class CantactBloceRemoved extends CantactBlocState {}
 
+class CantactBloceRemoving extends CantactBlocState {}
+
 class CantactBlocServerError extends CantactBlocState {
   final String errorMessage;
 

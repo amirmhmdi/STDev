@@ -69,10 +69,13 @@ class CantactBlocCubit extends Cubit<CantactBlocState> {
   }
 
   void deleteContact(String deletedContactId) async {
+    emit(CantactBloceRemoving());
     var response = await contactRepository.deleteContact(deletedContactId);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 204) {
+      contactResponse?.data?.removeWhere((element) => element.id == deletedContactId);
       emit(CantactBloceRemoved());
+      emit(CantactBlocLoaded());
     } else {
       emit(CantactBlocServerError("Document not found"));
     }
